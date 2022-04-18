@@ -5,6 +5,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.graphics.Color
 
 private val DarkColorPalette = darkColors(
@@ -17,29 +18,27 @@ private val DarkColorPalette = darkColors(
 
 private val LightColorPalette = lightColors(
     primary = Color.White,
-
-    /* Other default colors to override
-    background = Color.White,
-    surface = Color.White,
-    onPrimary = Color.White,
-    onSecondary = Color.Black,
+    background = LightBlue,
     onBackground = Color.Black,
-    onSurface = Color.Black,
-    */
+    surface = DarkGray,
+    onSurface = LightBlue
 )
 
 @Composable
 fun ReNoteTheme(darkTheme: Boolean = true, content: @Composable () -> Unit) {
 
-    MaterialTheme(
-        colors = DarkColorPalette,
-        typography = Typography,
-        shapes = Shapes,
-        content = content
-    )
-    /*val colors = if (darkTheme) {
+    val colors = if (darkTheme) {
         DarkColorPalette
     } else {
         LightColorPalette
-    }*/
+    }
+
+    CompositionLocalProvider(LocalSpacing provides Spacing()) {
+        MaterialTheme(
+            colors = colors,
+            typography = Typography,
+            shapes = Shapes,
+            content = content
+        )
+    }
 }
